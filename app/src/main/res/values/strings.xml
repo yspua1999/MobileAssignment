@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MobileAssignment</string>
+    <string name="tab_text_1">Activities</string>
+    <string name="tab_text_2">Group Chat</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="activity_fragment">Activity fragment</string>
+    <string name="search_activities">search activities</string>
+    <string name="search">search</string>
+    <string name="popular_activities">Popular Activities</string>
+</resources>
