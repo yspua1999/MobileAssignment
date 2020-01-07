@@ -2,6 +2,7 @@ package com.android.example.mobileassignment;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
@@ -9,21 +10,28 @@ import java.util.List;
 
 public class EventViewModel extends AndroidViewModel {
 
-    private EventRepository mRepository;
-
-    private LiveData<List<Event>> mASCRating;
+    private EventRepository eventRepository;
 
     public EventViewModel(Application application){
         super(application);
-        mRepository = new EventRepository(application);
-        mASCRating = mRepository.getASCRating();
+        eventRepository = new EventRepository(application);
     }
 
-    LiveData<List<Event>> getmASCRating(){
-        return mASCRating;
-    }
+    public LiveData<List<Event>> getAllEvents(){ return eventRepository.getAllEvents(); }
 
-    public void insert (Event event){
-        mRepository.insert(event);
-    }
+
+    public void insertEvent(Event event){ eventRepository.insertEvent(event); }
 }
+//
+//public class EventViewModel extends AndroidViewModel {
+//    private EventRepository eventRepository;
+//
+//    public EventViewModel(@NonNull Application application) {
+//        super(application);
+//        eventRepository = new EventRepository(application);
+//    }
+//
+//    public LiveData<List<Event>> getmASCRating(){ return eventRepository.getmGetASCRating(); }
+//
+//    public void insertEvent(Event event){ eventRepository.insertEvent(event); }
+//}

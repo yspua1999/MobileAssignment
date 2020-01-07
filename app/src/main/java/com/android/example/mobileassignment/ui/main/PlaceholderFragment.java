@@ -13,6 +13,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.android.example.mobileassignment.R;
+import com.android.example.mobileassignment.activitiesFragment;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -49,7 +50,7 @@ public class PlaceholderFragment extends Fragment {
         View root = null;
         switch(getArguments().getInt(ARG_SECTION_NUMBER)){
             case 1:
-                root = inflater.inflate(R.layout.fragment_activities, container, false);
+                root = inflater.inflate(R.layout.fragment_activities,container,false);
                 break;
             case 2:
                 root = inflater.inflate(R.layout.fragment_main, container, false);

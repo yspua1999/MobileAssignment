@@ -6,25 +6,21 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
-@Database(entities = Event.class, version = 1)
+@Database(entities = {Event.class}, version = 1, exportSchema = false)
 public abstract class EventRoomDatabase extends RoomDatabase {
 
-    public abstract EventDao eventDao();
+    public abstract EventDao getEventDao();
 
     private static volatile EventRoomDatabase eventRoomInstance;
-    private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor =
-            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    static EventRoomDatabase getDatabase(final Context context) {
+    public static EventRoomDatabase getDatabase(final Context context) {
         if (eventRoomInstance == null) {
             synchronized (EventRoomDatabase.class) {
                 if (eventRoomInstance == null) {
                     eventRoomInstance = Room.databaseBuilder(context.getApplicationContext(),
                             EventRoomDatabase.class, "event_database")
+                            .allowMainThreadQueries()
                             .build();
                 }
             }

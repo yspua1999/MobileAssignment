@@ -3,9 +3,13 @@
     <string name="tab_text_1">Activities</string>
     <string name="tab_text_2">Group Chat</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="activity_fragment">Activity fragment</string>
     <string name="search_activities">search activities</string>
     <string name="search">search</string>
-    <string name="popular_activities">Popular Activities</string>
+    <string name="popular_activities">All Activities</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="location">Location</string>
+    <string name="operation_hours">Operation Hours</string>
+    <string name="description">Description</string>
 </resources>

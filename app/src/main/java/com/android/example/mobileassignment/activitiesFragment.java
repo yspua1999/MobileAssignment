@@ -1,110 +1,57 @@
 package com.android.example.mobileassignment;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link activitiesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link activitiesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class activitiesFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    EventViewModel eventViewModel;
 
-    private OnFragmentInteractionListener mListener;
-
-    public activitiesFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment activitiesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static activitiesFragment newInstance(String param1, String param2) {
-        activitiesFragment fragment = new activitiesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_activities, container, false);
+        View view = inflater.inflate(R.layout.fragment_activities, container, false);
+
+        eventViewModel = ViewModelProviders.of(this).get(EventViewModel.class);
+
+//        Event event = new Event(0,"event 14", "indoor", "so fun to play here", "B-10-12 B V-Residentsi, Persiaran Selayang Height, Batu Caves.", 4, "15:00" , "17:00");
+//        eventViewModel.insertEvent(event);
+
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        EventListAdapter adapter = new EventListAdapter(getContext());
+        recyclerView.setAdapter(adapter);
+        eventViewModel.getAllEvents().observe(this, events -> adapter.setEvents(events));
+
+        adapter.setOnItemClickListener(new EventListAdapter.OnEventItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                activityDetailFragment activityDetail = new activityDetailFragment();
+                Bundle bundle = new Bundle();
+                String eventId = ((TextView) recyclerView.findViewHolderForAdapterPosition(position).itemView.findViewById(R.id.hidden_id)).getText().toString();
+                bundle.putInt("eventId", Integer.parseInt(eventId));
+                activityDetail.setArguments(bundle);
+
+                getFragmentManager().beginTransaction().addToBackStack(null).replace(getId(), activityDetail).commit();
+            }
+        });
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }
