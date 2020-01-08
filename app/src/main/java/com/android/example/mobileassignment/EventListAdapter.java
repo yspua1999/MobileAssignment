@@ -62,9 +62,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         if (Events != null) {
             Event current = Events.get(position);
             holder.eventIdView.setText(String.valueOf(current.getId()));
-            holder.eventNameView.setText(current.getName());
-            holder.eventAddressView.setText(current.getLocation());
-            holder.eventOprtHourView.setText(current.getStartOperationTime() + "-" + current.getEndOperationTime());
+            holder.eventNameView.setText("Event name : " + current.getName());
+            holder.eventAddressView.setText("Address : " + current.getLocation());
+            holder.eventOprtHourView.setText("Operation Hours : " + current.getStartOperationTime() + "-" + current.getEndOperationTime());
         } else {
             // Covers the case of data not being ready yet.
             holder.eventNameView.setText("Invalid");

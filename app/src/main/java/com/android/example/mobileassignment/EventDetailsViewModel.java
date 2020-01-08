@@ -14,6 +14,5 @@ public class EventDetailsViewModel extends AndroidViewModel {
         eventDetailsRepository = new EventDetailsRepository(application);
     }
 
-
     Event findEventDetails(int id) { return eventDetailsRepository.findEventDetails(id); }
 }

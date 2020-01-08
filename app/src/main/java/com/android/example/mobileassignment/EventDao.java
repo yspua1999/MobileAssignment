@@ -23,4 +23,7 @@ public interface EventDao {
 
     @Query("Select * from event_table WHERE event_id=:id")
     Event findEventDetails(int id);
+
+    @Query("Select * from event_table WHERE event_name LIKE '%' || :name || '%'")
+    LiveData<List<Event>> searchEvent(String name);
 }
